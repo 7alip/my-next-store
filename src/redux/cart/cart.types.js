@@ -1,0 +1,10 @@
+export const LOAD_CART = 'LOAD_CART'
+export const REMOVE_CART = 'REMOVE_CART'
+export const CART_LOADING = 'CART_LOADING'
+export const CART_LOADED = 'CART_LOADED'
+export const CART_ERROR = 'CART_ERROR'
+export const CART_UPDATED = 'CART_UPDATED'
+
+export const CHECKOUT_FAILURE = 'CHECKOUT_FAILURE'
+export const CHECKOUT_SUCCESS = 'CHECKOUT_SUCCESS'
+export const CHECKOUT = 'CHECKOUT'
