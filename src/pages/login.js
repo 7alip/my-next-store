@@ -7,6 +7,7 @@ import { Message, Form, Segment, Button, Icon } from 'semantic-ui-react'
 import Axios from 'axios'
 import Router from 'next/router'
 import baseUrl from '../utils/baseUrl'
+import catchErrors from '../utils/catchErrors'
 
 const INITIAL_USER = { email: '', password: '' }
 
@@ -31,13 +32,12 @@ export default function Login() {
     try {
       setLoading(true)
       const url = `${baseUrl}/api/login`
-      const payload = { email: user.email, password: user.password }
+      const payload = { ...user }
       const response = await Axios.post(url, payload)
-      const token = response.data
-      cookie.set('token', token)
+      cookie.set('token', response.data)
       Router.push('/')
     } catch (err) {
-      setError(err)
+      catchErrors(err, setError)
     } finally {
       setLoading(false)
     }
@@ -46,7 +46,11 @@ export default function Login() {
   return (
     <div>
       <Form error={Boolean(error)} loading={loading} onSubmit={handleSubmit}>
-        <Message error header='Oops!' content={<p>{error.message}</p>} />
+        <Message
+          error
+          header='Oops!'
+          content={<p>{JSON.stringify(error)}</p>}
+        />
         <Segment>
           <Form.Input
             fluid

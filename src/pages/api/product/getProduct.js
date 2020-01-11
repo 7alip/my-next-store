@@ -1,10 +1,10 @@
 import Product from '../../../models/Product'
 import connectDb from '../../../utils/connectDb'
 
-connectDb()
-
 export default async function(req, res) {
   try {
+    connectDb('(Get Product)')
+
     const { _id } = req.query
     const product = await Product.findOne({ _id })
 

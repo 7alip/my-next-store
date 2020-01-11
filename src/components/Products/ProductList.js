@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Card, Button, Segment } from 'semantic-ui-react'
+import { Card, Button, Segment, Grid } from 'semantic-ui-react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Facebook } from 'react-content-loader'
 
@@ -20,8 +20,8 @@ function ProductList() {
 
   return (
     <div style={{ marginBottom: '5rem' }}>
-      <Card.Group stackable centered itemsPerRow='3'>
-        {products.length &&
+      <Card.Group as={Grid} columns={4} centered doubling>
+        {products.length > 0 &&
           products.map(product => (
             <ProductItem key={product._id} product={product} />
           ))}

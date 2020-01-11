@@ -1,10 +1,4 @@
-import {
-  LOGIN_SUCCESS,
-  LOGIN_FAILED,
-  LOGOUT,
-  LOAD_USER,
-  USER_LOADING,
-} from './auth.types'
+import { LOGIN_FAILED, LOGOUT, LOAD_USER, USER_LOADING } from './auth.types'
 
 const initialState = {
   user: {},
@@ -16,8 +10,6 @@ export default (state = initialState, { type, payload }) => {
   switch (type) {
     case USER_LOADING:
       return { ...state, loading: true, error: false }
-    case LOGIN_SUCCESS:
-      return { ...state, token: payload, loading: false, error: false }
     case LOGIN_FAILED:
       return { ...state, error: payload, loading: false }
     case LOAD_USER:
@@ -28,7 +20,7 @@ export default (state = initialState, { type, payload }) => {
         loading: false,
       }
     case LOGOUT:
-      return { ...state, user: {}, error: false, loading: false }
+      return initialState
     default:
       return state
   }

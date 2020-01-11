@@ -23,7 +23,7 @@ function CartItemList() {
           </Item.Header>
         ),
         image: p.product.mediaUrl,
-        meta: `${p.quantity} x $${p.product.price}`,
+        meta: `${p.quantity} x €${p.product.price}`,
         fluid: 'true',
         extra: (
           <Button

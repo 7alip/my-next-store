@@ -6,6 +6,7 @@ import {
   CHECKOUT_SUCCESS,
   CHECKOUT_FAILURE,
 } from './cart.types'
+import { LOGOUT } from '../auth/auth.types'
 
 const initialState = {
   cartProducts: [],
@@ -27,6 +28,8 @@ export default (state = initialState, { type, payload }) => {
     case LOAD_CART:
     case REMOVE_CART:
       return { ...state, cartProducts: payload, error: false, loading: false }
+    case LOGOUT:
+      return initialState
     default:
       return state
   }

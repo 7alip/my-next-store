@@ -28,7 +28,8 @@ Account.getInitialProps = async ctx => {
   const payload = { headers: { Authorization: token } }
   const url = `${baseUrl}/api/orders`
   const response = await Axios.get(url, payload)
-  return response.data
+  const { orders } = response.data
+  return { orders }
 }
 
 export default Account

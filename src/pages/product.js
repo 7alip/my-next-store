@@ -15,7 +15,6 @@ function Products({ product }) {
   )
 }
 
-// eslint-disable-next-line consistent-return
 Products.getInitialProps = async ({ query: { id: _id } }) => {
   try {
     const url = `${baseUrl}/api/product`

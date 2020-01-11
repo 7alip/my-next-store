@@ -3,35 +3,33 @@ import { parseCookies, destroyCookie } from 'nookies'
 
 import baseUrl from './baseUrl'
 import { loadUser } from '../redux/auth/auth.actions'
-import { loadProducts } from '../redux/product/product.actions'
 import { loadCart } from '../redux/cart/cart.actions'
 import { redirectUser } from './auth'
+import { loadProducts } from '../redux/product/product.actions'
 
-// eslint-disable-next-line consistent-return
-export async function fetchAndStoreProducts(ctx) {
+export async function fetchProducts(ctx) {
   const { productReducer } = ctx.reduxStore.getState()
-  let { products, totalProducts } = productReducer
+  const { products, totalProducts } = productReducer
 
-  if (products.length > 0) {
-    return { products }
-  }
+  if (products.length > 0) return { products, totalProducts }
 
   try {
     const url = `${baseUrl}/api/products`
     const response = await Axios.get(url)
-    products = response.data.products
-    totalProducts = response.data.totalProducts
-    ctx.reduxStore.dispatch(loadProducts({ products, totalProducts }))
+
+    ctx.reduxStore.dispatch(loadProducts({ ...response.data }))
+
+    return { ...response.data }
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error('error!!!', error)
   }
 }
 
-export async function getUserIfLoggedIn(ctx) {
+export async function fetchUserAndCart(ctx) {
   const { authReducer, cartReducer } = ctx.reduxStore.getState()
   let { user } = authReducer
   let { cartProducts } = cartReducer
+
   const { token } = parseCookies(ctx)
 
   const isProtectedRoute =
@@ -42,8 +40,10 @@ export async function getUserIfLoggedIn(ctx) {
       return redirectUser(ctx, '/login')
     }
 
-    return {}
+    return user
   }
+
+  if ('_id' in user) return user
 
   try {
     const payload = { headers: { Authorization: token } }

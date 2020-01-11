@@ -3,11 +3,10 @@ import Cart from '../../../models/Cart'
 
 import connectDb from '../../../utils/connectDb'
 
-connectDb()
-
 export default async function(req, res) {
   const { _id } = req.query
   try {
+    connectDb('(Delete Product)')
     // 1) Delete product by id
     await Product.findOneAndDelete({ _id })
     // 2) Remove product from all carts, referenced as 'product'

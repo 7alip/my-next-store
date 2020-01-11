@@ -1,11 +1,10 @@
 import Product from '../../../models/Product'
 import connectDb from '../../../utils/connectDb'
 
-connectDb()
-
-// eslint-disable-next-line consistent-return
 export default async function(req, res) {
   try {
+    await connectDb('(Add Product)')
+
     const { name, price, description, mediaUrl } = req.body
 
     if (!name || !price || !description || !mediaUrl) {

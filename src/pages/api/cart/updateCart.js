@@ -4,11 +4,8 @@ import Cart from '../../../models/Cart'
 import Product from '../../../models/Product'
 import connectDb from '../../../utils/connectDb'
 
-connectDb()
-
 const { ObjectId } = mongoose.Types
 
-// eslint-disable-next-line consistent-return
 export default async function(req, res) {
   const { quantity, productId } = req.body
 
@@ -17,6 +14,8 @@ export default async function(req, res) {
   }
 
   try {
+    await connectDb('(Update Cart)')
+
     const { userId } = jwt.verify(
       req.headers.authorization,
       process.env.JWT_SECRET,

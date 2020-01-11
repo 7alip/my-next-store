@@ -26,6 +26,7 @@ function CreateProduct() {
   const [loading, setLoading] = React.useState(false)
   const [disabled, setDisabled] = React.useState(true)
   const [error, setError] = React.useState('')
+  const mediaInput = React.useRef(null)
 
   React.useEffect(() => {
     const isProduct = Object.values(product).every(value => Boolean(value))
@@ -37,10 +38,8 @@ function CreateProduct() {
     }
   }, [product])
 
-  // eslint-disable-next-line consistent-return
   function handleChange(event) {
     const { name, value, files } = event.target
-
     if (name === 'media') {
       setMediaPreview(window.URL.createObjectURL(files[0]))
       return setProduct(prevState => ({ ...prevState, media: files[0] }))
@@ -74,6 +73,8 @@ function CreateProduct() {
       }
       await Axios.post(url, payload)
       setProduct(INITIAL_PRODUCT)
+      setMediaPreview('')
+      mediaInput.current.inputRef.current.value = ''
       setSuccess(true)
     } catch (err) {
       catchErrors(err, setError)
@@ -122,15 +123,17 @@ function CreateProduct() {
             value={product.price}
             onChange={handleChange}
           />
-          <Form.Field
-            control={Input}
-            name='media'
-            label='Media'
-            content='Select Image'
-            accept='image/*'
-            type='file'
-            onChange={handleChange}
-          />
+          <Form.Field>
+            <Input
+              ref={mediaInput}
+              name='media'
+              label='Media'
+              content='Select Image'
+              accept='image/*'
+              type='file'
+              onChange={handleChange}
+            />
+          </Form.Field>
         </Form.Group>
         <Image src={mediaPreview} rounded centered size='small' />
         <Form.Field

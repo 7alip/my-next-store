@@ -7,11 +7,11 @@ import connectDb from '../../../utils/connectDb'
 import User from '../../../models/User'
 import Cart from '../../../models/Cart'
 
-connectDb()
-
 export default async (req, res) => {
   const { name, email, password } = req.body
   try {
+    await connectDb('(Register)')
+
     // 1 Validate name, email, password
     if (!isLength(name, { min: 3, max: 10 })) {
       return res.status(422).send('Name must be 3-10 characters long')

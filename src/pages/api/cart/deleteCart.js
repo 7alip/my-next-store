@@ -3,9 +3,6 @@ import Cart from '../../../models/Cart'
 import Product from '../../../models/Product'
 import connectDb from '../../../utils/connectDb'
 
-connectDb()
-
-// eslint-disable-next-line consistent-return
 export default async function(req, res) {
   const { id } = req.query
 
@@ -14,6 +11,8 @@ export default async function(req, res) {
   }
 
   try {
+    await connectDb('(Delete Cart)')
+
     const { userId } = jwt.verify(
       req.headers.authorization,
       process.env.JWT_SECRET,

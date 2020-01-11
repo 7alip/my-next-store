@@ -1,9 +1,6 @@
 {
   "name": "next-store",
   "version": "1.0.0",
-  "engines": {
-    "node": "10.x"
-  },
   "main": "next.config.js",
   "scripts": {
     "dev": "next",
@@ -20,9 +17,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.8.1",
     "next": "latest",
-    "nextjs-morph-page": "^2.0.3",
     "nookies": "^2.0.8",
-    "nprogress": "^0.2.0",
     "prop-types": "^15.7.2",
     "pure-react-carousel": "^1.24.1",
     "react": "^16.9.0",
@@ -38,7 +33,6 @@
     "shortid": "^2.2.15",
     "stripe": "^7.14.0",
     "styled-components": "^4.4.1",
-    "use-http": "^0.2.4",
     "uuid": "^3.3.3",
     "validator": "^12.1.0"
   },

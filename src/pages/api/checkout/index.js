@@ -7,14 +7,14 @@ import Product from '../../../models/Product'
 import calculateCartTotal from '../../../utils/calculateCartTotal'
 import connectDb from '../../../utils/connectDb'
 
-connectDb()
-
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY)
 
 export default async (req, res) => {
   const { paymentData } = req.body
 
   try {
+    await connectDb('(Payment)')
+
     // 1) Verify and get user id from token
     const { userId } = jwt.verify(
       req.headers.authorization,

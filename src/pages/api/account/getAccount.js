@@ -2,15 +2,14 @@ import jwt from 'jsonwebtoken'
 import User from '../../../models/User'
 import connectDb from '../../../utils/connectDb'
 
-connectDb()
-
-// eslint-disable-next-line consistent-return
 export default async function(req, res) {
   if (!('authorization' in req.headers)) {
     return res.status(401).send('No authorization token')
   }
 
   try {
+    await connectDb('(Get User)')
+
     const { userId } = jwt.verify(
       req.headers.authorization,
       process.env.JWT_SECRET,

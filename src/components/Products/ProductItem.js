@@ -1,5 +1,5 @@
-import { Card, Button, Image } from 'semantic-ui-react'
-import { useDispatch } from 'react-redux'
+import { Card, Button, Image, Icon } from 'semantic-ui-react'
+import { useDispatch, useSelector } from 'react-redux'
 import Link from 'next/link'
 import styled from 'styled-components'
 
@@ -25,6 +25,7 @@ export const ProductCard = styled(Card)`
 
 function ProductItem({ product: { mediaUrl, price, name, _id } }) {
   const dispatch = useDispatch()
+  const { loading } = useSelector(state => state.cartReducer)
 
   return (
     <ProductCard fluid>
@@ -35,15 +36,20 @@ function ProductItem({ product: { mediaUrl, price, name, _id } }) {
       </Link>
       <Card.Content>
         <Card.Header>{name}</Card.Header>
-        <Card.Meta>{`${price}`}</Card.Meta>
+        <Card.Meta>{`€${price}`}</Card.Meta>
         <Button
           onClick={() => dispatch(addToCart(1, _id))}
-          icon='plus'
           floated='right'
-          content='Add to cart'
           circular
           color='orange'
-        />
+        >
+          {loading ? (
+            <Icon name='refresh' loading />
+          ) : (
+            <Icon name='cart plus' />
+          )}{' '}
+          Add to Cart
+        </Button>
       </Card.Content>
     </ProductCard>
   )

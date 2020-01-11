@@ -2,11 +2,10 @@ import mongoose from 'mongoose'
 
 const connection = {}
 
-async function connectDb() {
+async function connectDb(reason = '') {
   try {
     if (connection.isConnected) {
-      console.log('Using existing connection')
-      return
+      return console.log('Using existing connection', reason)
     }
 
     const db = await mongoose.connect(process.env.MONGO_SRV, {
@@ -16,7 +15,7 @@ async function connectDb() {
       useUnifiedTopology: true,
     })
 
-    console.log('DB Connected')
+    console.log('DB Connected', reason)
 
     connection.isConnected = db.connections[0].readyState
   } catch (error) {

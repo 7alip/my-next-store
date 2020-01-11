@@ -1,9 +1,6 @@
-import connectDb from '../../../utils/connectDb'
 import getProduct from './getProduct'
 import addProduct from './addProduct'
 import deleteProduct from './deleteProduct'
-
-connectDb()
 
 export default async (req, res) => {
   switch (req.method) {

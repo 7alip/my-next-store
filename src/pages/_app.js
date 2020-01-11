@@ -3,12 +3,25 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import Router from 'next/router'
 import { ThemeProvider } from 'styled-components'
-import MorphTransition from 'nextjs-morph-page'
 
 import withReduxStore from '../lib/with-redux-store'
 import Layout from '../components/_App/Layout'
+import { fetchUserAndCart, fetchProducts } from '../utils/fetchData'
 
 class MyApp extends App {
+  static async getInitialProps({ Component, ctx }) {
+    let pageProps = {}
+
+    if (Component.getInitialProps) {
+      pageProps = await Component.getInitialProps(ctx)
+    }
+
+    await fetchUserAndCart(ctx)
+    await fetchProducts(ctx)
+
+    return { pageProps }
+  }
+
   componentDidMount() {
     window.addEventListener('storage', this.syncLogout)
 
@@ -32,28 +45,7 @@ class MyApp extends App {
       <Provider store={store}>
         <ThemeProvider theme={{}}>
           <Layout {...pageProps}>
-            <MorphTransition timeout={500} classNames='morph'>
-              <Component {...pageProps} />
-            </MorphTransition>
-            <style jsx global>{`
-              body {
-                background-color: #efefef;
-              }
-              .morph.enter {
-                opacity: 0;
-              }
-              .morph.enter.active {
-                opacity: 1;
-                transition: opacity 300ms;
-              }
-              .morph.exit {
-                opacity: 1;
-              }
-              .morph.exit.active {
-                opacity: 0;
-                transition: opacity 300ms;
-              }
-            `}</style>
+            <Component {...pageProps} />
           </Layout>
         </ThemeProvider>
       </Provider>

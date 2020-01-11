@@ -4,10 +4,10 @@ import Order from '../../../models/Order'
 import Product from '../../../models/Product'
 import connectDb from '../../../utils/connectDb'
 
-connectDb()
-
 export default async (req, res) => {
   try {
+    await connectDb('(Get Orders)')
+
     const { userId } = jwt.verify(
       req.headers.authorization,
       process.env.JWT_SECRET,
